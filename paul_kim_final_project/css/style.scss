@@ -7,6 +7,15 @@ COMP 2132 Final Project
 
 @import url(./normalize.css);
 
+@mixin stats-style($background-color, $width, $height, $position, $top, $left, $border) {
+    background-color: $background-color;
+    width: $width;
+    height: $height;
+    position: $position;
+    top: $top;
+    left: $left;
+    border: $border;
+}
 
 $bg-color1: rgb(43, 43, 99);
 
@@ -27,8 +36,10 @@ header {
         ul {
             list-style: none;
             display: flex;
+
             li {
                 margin-right: 30px;
+
                 a {
                     text-decoration: none;
                     color: white;
@@ -95,16 +106,6 @@ footer {
     z-index: 10;
 }
 
-#enemy-stats {
-    background-color: white;
-    width: 125px;
-    height: 75px;
-    position: absolute;
-    top: 55px;
-    left: 170px;
-    border: 4px solid black;
-}
-
 #enemy-name {
     font-size: 14px;
     padding: 2px;
@@ -129,16 +130,6 @@ footer {
     top: 0;
     left: 0;
     right: 0;
-}
-
-#player-stats {
-    background-color: white;
-    width: 125px;
-    height: 75px;
-    position: absolute;
-    top: 55px;
-    left: 10px;
-    border: 4px solid black;
 }
 
 #player-name {
@@ -212,28 +203,32 @@ footer {
     display: none;
 }
 
+#enemy-stats {
+    @include stats-style(white, 125px, 75px, absolute, 55px, 170px, 4px solid black);
+}
+
+#player-stats {
+    @include stats-style(white, 125px, 75px, absolute, 55px, 10px, 4px solid black);
+}
+
 @media (min-width:700px) {
     #enemy-stats {
-        background-color: white;
-        width: 125px;
-        height: 75px;
-        position: absolute;
         top: 125px;
         left: 490px;
-        border: 4px solid black;
     }
 
     #player-stats {
-        background-color: white;
-        width: 125px;
-        height: 75px;
-        position: absolute;
         top: 125px;
         left: 50px;
-        border: 4px solid black;
     }
 
     #battle-ui {
         height: 120px;
+    }
+}
+
+@media (min-width:800px) {
+    #enemy-stats {
+        left: 900px;
     }
 }
