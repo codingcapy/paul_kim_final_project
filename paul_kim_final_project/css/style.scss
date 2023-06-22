@@ -1,0 +1,239 @@
+/*
+Author: Paul Kim A01273049
+Date: June 21, 2023
+Version: 1.0
+COMP 2132 Final Project
+*/
+
+@import url(./normalize.css);
+
+
+$bg-color1: rgb(43, 43, 99);
+
+html {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: inherit;
+}
+
+header {
+    background-color: $bg-color1;
+    color: white;
+
+    nav {
+        ul {
+            list-style: none;
+            display: flex;
+            li {
+                margin-right: 30px;
+                a {
+                    text-decoration: none;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+main {
+    padding-left: 10px;
+    flex: 1;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: rgb(185, 182, 182);
+}
+
+footer {
+    background-color: $bg-color1;
+    color: white;
+    text-align: center;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 300px;
+}
+
+#buttons button {
+    margin: 5px;
+    border: solid 1px black;
+    padding: 5px;
+}
+
+#container {
+    display: inline-block;
+    position: relative;
+    border: 2px solid black;
+}
+
+#container2 {
+    background-color: black;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+#enemy-stats {
+    background-color: white;
+    width: 125px;
+    height: 75px;
+    position: absolute;
+    top: 55px;
+    left: 170px;
+    border: 4px solid black;
+}
+
+#enemy-name {
+    font-size: 14px;
+    padding: 2px;
+}
+
+#enemy-hp {
+    position: relative;
+}
+
+#enemy-hp-bar-max {
+    height: 5px;
+    background-color: grey;
+    margin: 2px;
+}
+
+#enemy-hp-bar-actual {
+    height: 5px;
+    background-color: green;
+    position: absolute;
+    margin-left: 5px;
+    margin-right: 5px;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#player-stats {
+    background-color: white;
+    width: 125px;
+    height: 75px;
+    position: absolute;
+    top: 55px;
+    left: 10px;
+    border: 4px solid black;
+}
+
+#player-name {
+    font-size: 14px;
+    padding: 2px;
+}
+
+#player-hp {
+    position: relative;
+}
+
+#player-hp-bar-max {
+    height: 5px;
+    background-color: grey;
+    margin: 2px;
+}
+
+#player-hp-bar-actual {
+    height: 5px;
+    background-color: green;
+    position: absolute;
+    margin-left: 5px;
+    margin-right: 5px;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#battle-ui {
+    background-color: white;
+    height: 60px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 4px solid black;
+    display: flex;
+}
+
+#battle-menu {
+    width: 66.66%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#attack-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 33.33%;
+    border-left: 4px solid black;
+}
+
+#attack-type h1 {
+    font-size: 16px;
+}
+
+#battle-msg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    padding: 15px;
+    display: none;
+    cursor: pointer;
+}
+
+#user-interface {
+    display: none;
+}
+
+@media (min-width:700px) {
+    #enemy-stats {
+        background-color: white;
+        width: 125px;
+        height: 75px;
+        position: absolute;
+        top: 125px;
+        left: 490px;
+        border: 4px solid black;
+    }
+
+    #player-stats {
+        background-color: white;
+        width: 125px;
+        height: 75px;
+        position: absolute;
+        top: 125px;
+        left: 50px;
+        border: 4px solid black;
+    }
+
+    #battle-ui {
+        height: 120px;
+    }
+}

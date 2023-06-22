@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<!--
+Author: Paul Kim A01273049
+Date: June 21, 2023
+Version: 1.0
+COMP 2132 Final Project
+-->
+
+<head>
+    <title>COMP 2132 Final Project By Paul Kim</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../script/gsap.js"></script>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <script src="../script/main.js" defer="defer"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <h1>COMP 2132 Final Project By Paul Kim</h1>
+            <div id="container">
+                <div id="container2"></div>
+                <canvas id="canvas"></canvas>
+                <div id="user-interface">
+                    <div id="enemy-stats">
+                        <h2 id="enemy-name"></h2>
+                        <div id="enemy-hp">
+                            <div id="enemy-hp-bar-max"></div>
+                            <div id="enemy-hp-bar-actual"></div>
+                        </div>
+                    </div><!--end div enemy-stats-->
+                    <div id="player-stats">
+                        <h2 id="player-name"></h2>
+                        <div id="player-hp">
+                            <div id="player-hp-bar-max"></div>
+                            <div id="player-hp-bar-actual"></div>
+                        </div>
+                    </div><!--end div player stats-->
+                    <div id="battle-ui">
+                        <div id="battle-msg"></div>
+                        <div id="battle-menu"></div>
+                        <div id="attack-type">
+                            <h2>Attack Type</h2>
+                        </div>
+                    </div><!--end div battle-ui-->
+                </div><!--end div user interface-->
+            </div><!--end div container-->
+            <div id="buttons">
+                <div></div>
+                <button id="up-button">up</button>
+                <div></div>
+                <button id="left-button">left</button>
+                <button id="down-button">down</button>
+                <button id="right-button">right</button>
+            </div><!--end div buttons-->
+            <h3>Instructions:</h3>
+            <p>Use WASD or the four buttons above to move the red knight. Once a battle sequence starts, click to choose
+                attack</p>
+        </main>
+        <footer>
+            <p>Copyright&copy;2023 Capytech. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
