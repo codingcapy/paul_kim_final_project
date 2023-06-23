@@ -1,8 +1,8 @@
 /*
 Author: Paul Kim
-Date: May 10, 2023
+Date: June 22, 2023
 Version: 1.0
-rpg game
+COMP 2132 Final Project
 */
 
 /*Variable declarations and definitions*/
@@ -281,7 +281,6 @@ class Entity extends Sprite {
                 gsap.to(slash.position, { x: recipient.position.x, y: recipient.position.y, onComplete: () => { gsap.to(hpBarActual, { width: `${recipient.health}%` }), gsap.to(recipient.position, { x: recipient.position.x + 10, yoyo: true, repeat: 5, duration: 0.08 }), gsap.to(recipient, { opacity: 0, repeat: 5, yoyo: true, duration: 0.1 }), renderedSprites.splice(1, 1) } });
                 break;
         } // end switch
-
     } // end function attack
     faint() {
         battleMsg.innerHTML = `${this.name} Fainted`;
@@ -403,7 +402,7 @@ function animate() {
                     moving = false;
                     break;
                 }
-            }
+            } // end for
             if (moving)
                 moveables.forEach(moveable => {
                     moveable.position.x -= 3;
@@ -419,7 +418,7 @@ function animate() {
                 moving = false;
                 break;
             }
-        }
+        } // end for
         if (moving)
             moveables.forEach(moveable => {
                 moveable.position.y -= 3
@@ -431,7 +430,7 @@ function animate() {
                     moving = false;
                     break;
                 }
-            }
+            } // end for
             if (moving)
                 moveables.forEach(moveable => {
                     moveable.position.x += 3;
@@ -444,7 +443,7 @@ function animate() {
                     moving = false;
                     break;
                 }
-            }
+            } // end for
             if (moving)
                 moveables.forEach(moveable => {
                     moveable.position.x -= 3;
@@ -460,7 +459,7 @@ function animate() {
                 moving = false;
                 break;
             }
-        }
+        } // end for
         if (moving)
             moveables.forEach(moveable => {
                 moveable.position.x += 3;
@@ -472,7 +471,7 @@ function animate() {
                     moving = false;
                     break;
                 }
-            }
+            } // end for
             if (moving)
                 moveables.forEach(moveable => {
                     moveable.position.y += 3;
@@ -485,7 +484,7 @@ function animate() {
                     moving = false;
                     break;
                 }
-            }
+            } // end for
             if (moving)
                 moveables.forEach(moveable => {
                     moveable.position.y -= 3;
@@ -501,7 +500,7 @@ function animate() {
                 moving = false;
                 break;
             }
-        }
+        } // end for
         if (moving)
             moveables.forEach(moveable => {
                 moveable.position.x -= 3;
@@ -526,7 +525,7 @@ function animate() {
                     moving = false;
                     break;
                 }
-            }
+            } // end for
             if (moving)
                 moveables.forEach(moveable => {
                     moveable.position.y -= 3;
@@ -536,28 +535,28 @@ function animate() {
 } // end function animate
 
 function initBattle() {
-    emby = new Entity(entities.RedKnight);
-    draggle = new Entity(entities.Mushroom);
-    renderedSprites = [draggle, emby];
+    const battlePlayer = new Entity(entities.RedKnight);
+    const battleMushroom = new Entity(entities.Mushroom);
+    renderedSprites = [battleMushroom, battlePlayer];
     queue = [];
     userInterface.style.display = 'block';
     battleMsg.style.display = 'none';
     enemyHpBar.style.width = '100%';
     playerHpBar.style.width = '100%';
     battleMenu.replaceChildren();
-    const randomAttack = draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)];
-    emby.attacks.forEach(attack => {
+    const randomAttack = battleMushroom.attacks[Math.floor(Math.random() * battleMushroom.attacks.length)];
+    battlePlayer.attacks.forEach(attack => {
         const button = document.createElement('button');
         button.innerHTML = attack.name;
         battleMenu.append(button);
-    })
+    }) // end forEach
     document.querySelectorAll('button').forEach((button) => {
         button.addEventListener('click', (e) => {
             const selectedAttack = attacks[e.currentTarget.innerHTML];
-            emby.attack({ attackType: selectedAttack, recipient: draggle, renderedSprites });
-            if (draggle.health <= 0) {
+            battlePlayer.attack({ attackType: selectedAttack, recipient: battleMushroom, renderedSprites });
+            if (battleMushroom.health <= 0) {
                 queue.push(() => {
-                    draggle.faint();
+                    battleMushroom.faint();
                 })
                 queue.push(() => {
                     gsap.to('#container2', {
@@ -575,10 +574,10 @@ function initBattle() {
                 })
             }
             queue.push(() => {
-                draggle.attack({ attackType: randomAttack, recipient: emby, renderedSprites });
-                if (emby.health <= 0) {
+                battleMushroom.attack({ attackType: randomAttack, recipient: battlePlayer, renderedSprites });
+                if (battlePlayer.health <= 0) {
                     queue.push(() => {
-                        emby.faint();
+                        battlePlayer.faint();
                         queue.push(() => {
                             gsap.to('#container2', {
                                 opacity: 1,
@@ -602,7 +601,7 @@ function initBattle() {
             const selectedAttack = attacks[e.currentTarget.innerHTML];
             attackType.innerHTML = `<strong>${selectedAttack.type}</strong>`;
             attackType.style.color = selectedAttack.color;
-        })
+        }) // end event listener
     }) // end forEach
 } // end function initBattle
 

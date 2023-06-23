@@ -217,8 +217,8 @@ footer {
     height: 120px;
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 950px) {
   #enemy-stats {
-    left: 900px;
+    left: 800px;
   }
 }

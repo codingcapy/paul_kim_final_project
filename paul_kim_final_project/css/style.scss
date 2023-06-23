@@ -5,6 +5,8 @@ Version: 1.0
 COMP 2132 Final Project
 */
 
+@charset "utf-8";
+
 @import url(./normalize.css);
 
 @mixin stats-style($background-color, $width, $height, $position, $top, $left, $border) {
@@ -227,8 +229,8 @@ footer {
     }
 }
 
-@media (min-width:800px) {
+@media (min-width:950px) {
     #enemy-stats {
-        left: 900px;
+        left: 800px;
     }
 }
