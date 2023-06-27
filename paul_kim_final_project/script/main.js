@@ -313,6 +313,7 @@ const foreground = new Sprite({ position: { x: offset.x, y: offset.y }, image: f
 const moveables = [background, ...boundaries, foreground, ...battleZoneAreas];
 const battleBackground = new Sprite({ position: { x: 0, y: 0 }, scale: 4, image: battleBackgroundImg });
 
+
 /*function declarations and definitions*/
 
 function isColliding({ rectangle1, rectangle2 }) {
@@ -535,8 +536,8 @@ function animate() {
 } // end function animate
 
 function initBattle() {
-    const battlePlayer = new Entity(entities.RedKnight);
-    const battleMushroom = new Entity(entities.Mushroom);
+    battlePlayer = new Entity(entities.RedKnight);
+    battleMushroom = new Entity(entities.Mushroom);
     renderedSprites = [battleMushroom, battlePlayer];
     queue = [];
     userInterface.style.display = 'block';
@@ -608,8 +609,8 @@ function initBattle() {
 function animateBattle() {
     battleAnimationId = window.requestAnimationFrame(animateBattle);
     battleBackground.draw();
-    draggle.draw();
-    emby.draw();
+    battlePlayer.draw();
+    battleMushroom.draw();
     renderedSprites.forEach((sprite) => {
         sprite.draw();
     }) // end forEach
