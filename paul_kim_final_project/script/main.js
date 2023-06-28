@@ -538,10 +538,10 @@ function animate() {
 } // end function animate
 
 let battlePlayer;
-    let battleMushroom;
+let battleMushroom;
 
 function initBattle() {
-    
+
     battlePlayer = new Entity(entities.RedKnight);
     battleMushroom = new Entity(entities.Mushroom);
     renderedSprites = [battleMushroom, battlePlayer];
@@ -760,3 +760,15 @@ $rightButton.mouseup(function () {
 });
 
 animate(); // init game
+
+/*header nav toggle function*/
+
+(function (d) {
+
+    const $nav = d.querySelector('nav');
+    const $btn = d.querySelector('.hamburger-menu');
+    $btn.addEventListener('click', function () {
+        $nav.classList.toggle('show');
+    });
+
+})(document);
