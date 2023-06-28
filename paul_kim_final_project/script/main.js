@@ -622,8 +622,12 @@ function initBattle() {
                 if (battlePlayer.health <= 0) {
                     queue.push(() => {
                         battlePlayer.faint();
-                        background.position.x = offset.x;
-                        background.position.y = offset.y;
+                            background.position.x = offset.x;
+                            background.position.y = offset.y;
+                            foreground.position.x = offset.x;
+                            foreground.position.y = offset.y;
+                            entities.RedKnight.health = 100;
+                            attacks.Slash.damage = 25;
                         queue.push(() => {
                             gsap.to('#container2', {
                                 opacity: 1,
