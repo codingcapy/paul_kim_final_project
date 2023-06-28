@@ -541,7 +541,6 @@ let battlePlayer;
 let battleMushroom;
 
 function initBattle() {
-
     battlePlayer = new Entity(entities.RedKnight);
     battleMushroom = new Entity(entities.Mushroom);
     renderedSprites = [battleMushroom, battlePlayer];
@@ -549,7 +548,7 @@ function initBattle() {
     userInterface.style.display = 'block';
     battleMsg.style.display = 'none';
     enemyHpBar.style.width = '100%';
-    playerHpBar.style.width = '100%';
+    playerHpBar.style.width = `${battlePlayer.health}%`;
     battleMenu.replaceChildren();
     const randomAttack = battleMushroom.attacks[Math.floor(Math.random() * battleMushroom.attacks.length)];
     battlePlayer.attacks.forEach(attack => {
@@ -564,6 +563,7 @@ function initBattle() {
     }) // end forEach
     document.querySelectorAll('button').forEach((button) => {
         button.addEventListener('click', (e) => {
+            console.log(`hp: ${battlePlayer.health}`)
             console.log(`damage:${attacks.Slash.damage}`)
             const selectedAttack = attacks[e.currentTarget.innerHTML];
             const mushroomXp = 10;
@@ -576,10 +576,11 @@ function initBattle() {
                 queue.push(() => {
                     battleMsg.innerHTML = `<p>Red Knight gains ${mushroomXp} xp</p>`;
                     console.log(`xp:${playerStats.exp}`)
+                    entities.RedKnight.health = battlePlayer.health;
                 })
                 if (playerStats.exp > 49) {
                     playerStats.level = 3;
-                    playerStats.atk = 100;
+                    playerStats.atk = 75;
                     attacks.Slash.damage = playerStats.atk;
                 }
                 else if (playerStats.exp > 19) {
