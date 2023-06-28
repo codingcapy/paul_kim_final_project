@@ -54,16 +54,8 @@ header {
 main {
     padding-left: 10px;
     flex: 1;
-}
-
-button {
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: rgb(185, 182, 182);
+    margin: auto;
+    max-width: 1000px;
 }
 
 footer {
@@ -82,12 +74,19 @@ footer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     max-width: 300px;
+    margin: auto;
 }
 
-#buttons button {
-    margin: 5px;
-    border: solid 1px black;
-    padding: 5px;
+#buttons {
+    button {
+        margin: 5px;
+        border: solid 1px black;
+        padding: 5px;
+        background-color: rgb(27, 27, 153);
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+    }
 }
 
 #container {
