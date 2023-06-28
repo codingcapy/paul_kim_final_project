@@ -1,6 +1,6 @@
 /*
 Author: Paul Kim A01273049
-Date: June 21, 2023
+Date: June 28, 2023
 Version: 1.0
 COMP 2132 Final Project
 */
@@ -8,6 +8,9 @@ COMP 2132 Final Project
 @charset "utf-8";
 
 @import url(./normalize.css);
+
+$bg-color1: rgb(43, 43, 99);
+$hp-actual-color: rgb(39, 211, 39);
 
 @mixin stats-style($background-color, $width, $height, $position, $top, $left, $border) {
     background-color: $background-color;
@@ -19,7 +22,16 @@ COMP 2132 Final Project
     border: $border;
 }
 
-$bg-color1: rgb(43, 43, 99);
+@mixin hp-bar-actual($height, $background-color, $position, $margin-left, $margin-right, $top, $left, $right) {
+    height: $height;
+    background-color: $background-color;
+    position: $position;
+    margin-left: $margin-left;
+    margin-right: $margin-right;
+    top: $top;
+    left: $left;
+    right: $right;
+}
 
 html {
     box-sizing: border-box;
@@ -136,14 +148,7 @@ footer {
 }
 
 #enemy-hp-bar-actual {
-    height: 5px;
-    background-color: rgb(38, 196, 38);
-    position: absolute;
-    margin-left: 5px;
-    margin-right: 5px;
-    top: 0;
-    left: 0;
-    right: 0;
+    @include hp-bar-actual(5px, $hp-actual-color, absolute, 2px, 2px, 0, 0, 0);
 }
 
 #player-name {
@@ -162,14 +167,7 @@ footer {
 }
 
 #player-hp-bar-actual {
-    height: 5px;
-    background-color: rgb(38, 196, 38);
-    position: absolute;
-    margin-left: 5px;
-    margin-right: 5px;
-    top: 0;
-    left: 0;
-    right: 0;
+    @include hp-bar-actual(5px, $hp-actual-color, absolute, 2px, 2px, 0, 0, 0);
 }
 
 #battle-ui {

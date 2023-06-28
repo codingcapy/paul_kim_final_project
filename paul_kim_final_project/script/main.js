@@ -1,6 +1,6 @@
 /*
 Author: Paul Kim
-Date: June 22, 2023
+Date: June 28, 2023
 Version: 1.0
 COMP 2132 Final Project
 */
@@ -62,10 +62,10 @@ foregroundImage.src = '../assets/tiled/foreground.png';
 const battleBackgroundImg = new Image();
 battleBackgroundImg.src = '../assets/battle_background.jpg';
 const keys = { up: { pressed: false }, left: { pressed: false }, down: { pressed: false }, right: { pressed: false } };
-const playerStats = {exp: 0, level: 1, hp: 100, atk: 25};
-const attacks = { Slash: { name: 'Slash', damage: 25, type: 'Normal', color: 'white' }, Slam: { name: 'Slam', damage: 10, type: 'Normal', color: 'white' } };
+const playerStats = { exp: 0, level: 1, hp: 100, atk: 25 };
+const attacks = { Slash: { name: 'Slash', damage: playerStats.atk, type: 'Normal', color: 'white' }, Slam: { name: 'Slam', damage: 10, type: 'Normal', color: 'white' } };
 const battle = { initiated: false };
-const entities = { RedKnight: { position: redKnightPosition, image: { src: '../assets/player/right/right_0.png' }, frames: { max: 1, hold: 30 }, animate: false, name: 'Red Knight', attacks: [attacks.Slash], health:playerStats.hp }, Mushroom: { position: mushroomPosition, image: { src: '../assets/monster/mushroom2.png' }, frames: { max: 3, hold: 30 }, animate: true, isEnemy: true, name: 'Mushroom', attacks: [attacks.Slam] } };
+const entities = { RedKnight: { position: redKnightPosition, image: { src: '../assets/player/right/right_0.png' }, frames: { max: 1, hold: 30 }, animate: false, name: 'Red Knight', attacks: [attacks.Slash], health: playerStats.hp }, Mushroom: { position: mushroomPosition, image: { src: '../assets/monster/mushroom2.png' }, frames: { max: 3, hold: 30 }, animate: true, isEnemy: true, name: 'Mushroom', attacks: [attacks.Slam] } };
 const boundaries = [];
 const collisionsMap = [];
 const battleZoneAreas = [];
@@ -286,7 +286,7 @@ class Entity extends Sprite {
     } // end function attack
     faint() {
         battleMsg.innerHTML = `<p>${this.name} Fainted</p>`;
-        gsap.to(this.position, { y: this.position.y + 20 });
+        // gsap.to(this.position, { y: this.position.y + 20 });
         gsap.to(this, { opacity: 0 })
     } // end function faint
 } // end class Entity
@@ -537,7 +537,11 @@ function animate() {
     }
 } // end function animate
 
+let battlePlayer;
+    let battleMushroom;
+
 function initBattle() {
+    
     battlePlayer = new Entity(entities.RedKnight);
     battleMushroom = new Entity(entities.Mushroom);
     renderedSprites = [battleMushroom, battlePlayer];
@@ -561,19 +565,41 @@ function initBattle() {
     document.querySelectorAll('button').forEach((button) => {
         button.addEventListener('click', (e) => {
             const selectedAttack = attacks[e.currentTarget.innerHTML];
+            const mushroomXp = 10;
             battlePlayer.attack({ attackType: selectedAttack, recipient: battleMushroom, renderedSprites });
             if (battleMushroom.health <= 0) {
-                playerStats.exp += 10;
+                playerStats.exp += mushroomXp;
+                console.log(playerStats.exp)
                 queue.push(() => {
                     battleMushroom.faint();
                 })
-                queue.push(() =>{
-                    battleMsg.innerHTML = "<p>Red Knight gains 10 xp</p>"
+                queue.push(() => {
+                    battleMsg.innerHTML = `<p>Red Knight gains ${mushroomXp} xp</p>`;
                 })
-                if (playerStats.exp > 29) {
-                    playerStats.level = 2
-                    queue.push(() =>{
-                        battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`
+                if (playerStats.exp > 59) {
+                    playerStats.level = 3;
+                    playerStats.hp = 150;
+                    playerStats.atk = 75;
+                    console.log(playerStats.level)
+                    console.log(playerStats.hp)
+                    console.log(playerStats.atk)
+                }
+                else if (playerStats.exp > 19) {
+                    playerStats.level = 2;
+                    playerStats.hp = 120;
+                    playerStats.atk = 50;
+                    console.log(playerStats.level)
+                    console.log(playerStats.hp)
+                    console.log(playerStats.atk)
+                }
+                if (playerStats.exp == 20) {
+                    queue.push(() => {
+                        battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`;
+                    })
+                }
+                if (playerStats.exp == 60) {
+                    queue.push(() => {
+                        battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`;
                     })
                 }
                 queue.push(() => {
@@ -613,7 +639,7 @@ function initBattle() {
                             })
                         })
                     })
-                    queue.push(()=>{
+                    queue.push(() => {
                         battleMsg.innerHTML = "<p><strong>Game Over</strong></p>"
                     })
                     return;

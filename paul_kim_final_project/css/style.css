@@ -1,6 +1,6 @@
 /*
 Author: Paul Kim A01273049
-Date: June 21, 2023
+Date: June 28, 2023
 Version: 1.0
 COMP 2132 Final Project
 */
@@ -113,10 +113,10 @@ footer {
 
 #enemy-hp-bar-actual {
   height: 5px;
-  background-color: rgb(38, 196, 38);
+  background-color: rgb(39, 211, 39);
   position: absolute;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
   top: 0;
   left: 0;
   right: 0;
@@ -139,10 +139,10 @@ footer {
 
 #player-hp-bar-actual {
   height: 5px;
-  background-color: rgb(38, 196, 38);
+  background-color: rgb(39, 211, 39);
   position: absolute;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
   top: 0;
   left: 0;
   right: 0;
