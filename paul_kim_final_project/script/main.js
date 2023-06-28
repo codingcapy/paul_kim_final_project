@@ -62,9 +62,10 @@ foregroundImage.src = '../assets/tiled/foreground.png';
 const battleBackgroundImg = new Image();
 battleBackgroundImg.src = '../assets/battle_background.jpg';
 const keys = { up: { pressed: false }, left: { pressed: false }, down: { pressed: false }, right: { pressed: false } };
+const playerStats = {exp: 0, level: 1, hp: 100, atk: 25};
 const attacks = { Slash: { name: 'Slash', damage: 25, type: 'Normal', color: 'white' }, Slam: { name: 'Slam', damage: 10, type: 'Normal', color: 'white' } };
 const battle = { initiated: false };
-const entities = { RedKnight: { position: redKnightPosition, image: { src: '../assets/player/right/right_0.png' }, frames: { max: 1, hold: 30 }, animate: false, name: 'Red Knight', attacks: [attacks.Slash] }, Mushroom: { position: mushroomPosition, image: { src: '../assets/monster/mushroom2.png' }, frames: { max: 3, hold: 30 }, animate: true, isEnemy: true, name: 'Mushroom', attacks: [attacks.Slam] } };
+const entities = { RedKnight: { position: redKnightPosition, image: { src: '../assets/player/right/right_0.png' }, frames: { max: 1, hold: 30 }, animate: false, name: 'Red Knight', attacks: [attacks.Slash], health:playerStats.hp }, Mushroom: { position: mushroomPosition, image: { src: '../assets/monster/mushroom2.png' }, frames: { max: 3, hold: 30 }, animate: true, isEnemy: true, name: 'Mushroom', attacks: [attacks.Slam] } };
 const boundaries = [];
 const collisionsMap = [];
 const battleZoneAreas = [];
@@ -246,11 +247,11 @@ class Sprite {
 } // end class Sprite
 
 class Entity extends Sprite {
-    constructor({ position, image, frames = { max: 1, hold: 10 }, sprites, animate = false, rotation = 0, isEnemy = false, name, attacks }) {
+    constructor({ position, image, frames = { max: 1, hold: 10 }, sprites, animate = false, rotation = 0, isEnemy = false, name, attacks, health = 100 }) {
         super({ position, image, frames, sprites, animate, rotation });
         this.isEnemy = isEnemy;
         this.name = name;
-        this.health = 100;
+        this.health = health;
         this.attacks = attacks;
     } // end constructor
     attack({ attackType, recipient }) {
@@ -284,7 +285,7 @@ class Entity extends Sprite {
         } // end switch
     } // end function attack
     faint() {
-        battleMsg.innerHTML = `${this.name} Fainted`;
+        battleMsg.innerHTML = `<p>${this.name} Fainted</p>`;
         gsap.to(this.position, { y: this.position.y + 20 });
         gsap.to(this, { opacity: 0 })
     } // end function faint
@@ -562,9 +563,19 @@ function initBattle() {
             const selectedAttack = attacks[e.currentTarget.innerHTML];
             battlePlayer.attack({ attackType: selectedAttack, recipient: battleMushroom, renderedSprites });
             if (battleMushroom.health <= 0) {
+                playerStats.exp += 10;
                 queue.push(() => {
                     battleMushroom.faint();
                 })
+                queue.push(() =>{
+                    battleMsg.innerHTML = "<p>Red Knight gains 10 xp</p>"
+                })
+                if (playerStats.exp > 29) {
+                    playerStats.level = 2
+                    queue.push(() =>{
+                        battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`
+                    })
+                }
                 queue.push(() => {
                     gsap.to('#container2', {
                         opacity: 1,
@@ -601,6 +612,9 @@ function initBattle() {
                                 }
                             })
                         })
+                    })
+                    queue.push(()=>{
+                        battleMsg.innerHTML = "<p><strong>Game Over</strong></p>"
                     })
                     return;
                 }

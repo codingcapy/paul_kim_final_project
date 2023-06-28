@@ -113,7 +113,7 @@ footer {
 
 #enemy-hp-bar-actual {
   height: 5px;
-  background-color: green;
+  background-color: rgb(38, 196, 38);
   position: absolute;
   margin-left: 5px;
   margin-right: 5px;
@@ -139,7 +139,7 @@ footer {
 
 #player-hp-bar-actual {
   height: 5px;
-  background-color: green;
+  background-color: rgb(38, 196, 38);
   position: absolute;
   margin-left: 5px;
   margin-right: 5px;
