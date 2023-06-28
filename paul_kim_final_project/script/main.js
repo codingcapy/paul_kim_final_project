@@ -564,42 +564,41 @@ function initBattle() {
     }) // end forEach
     document.querySelectorAll('button').forEach((button) => {
         button.addEventListener('click', (e) => {
+            console.log(`damage:${attacks.Slash.damage}`)
             const selectedAttack = attacks[e.currentTarget.innerHTML];
             const mushroomXp = 10;
             battlePlayer.attack({ attackType: selectedAttack, recipient: battleMushroom, renderedSprites });
             if (battleMushroom.health <= 0) {
                 playerStats.exp += mushroomXp;
-                console.log(playerStats.exp)
                 queue.push(() => {
                     battleMushroom.faint();
                 })
                 queue.push(() => {
                     battleMsg.innerHTML = `<p>Red Knight gains ${mushroomXp} xp</p>`;
+                    console.log(`xp:${playerStats.exp}`)
                 })
-                if (playerStats.exp > 59) {
+                if (playerStats.exp > 49) {
                     playerStats.level = 3;
-                    playerStats.hp = 150;
-                    playerStats.atk = 75;
-                    console.log(playerStats.level)
-                    console.log(playerStats.hp)
-                    console.log(playerStats.atk)
+                    playerStats.atk = 100;
+                    attacks.Slash.damage = playerStats.atk;
                 }
                 else if (playerStats.exp > 19) {
                     playerStats.level = 2;
-                    playerStats.hp = 120;
                     playerStats.atk = 50;
-                    console.log(playerStats.level)
-                    console.log(playerStats.hp)
-                    console.log(playerStats.atk)
+                    attacks.Slash.damage = playerStats.atk;
                 }
                 if (playerStats.exp == 20) {
                     queue.push(() => {
                         battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`;
+                        console.log(`lvl: ${playerStats.level}`);
+                        console.log(`atk:${playerStats.atk}`)
                     })
                 }
-                if (playerStats.exp == 60) {
+                if (playerStats.exp == 50) {
                     queue.push(() => {
                         battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`;
+                        console.log(`lvl: ${playerStats.level}`);
+                        console.log(`atk:${playerStats.atk}`)
                     })
                 }
                 queue.push(() => {
