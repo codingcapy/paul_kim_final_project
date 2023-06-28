@@ -62,7 +62,7 @@ foregroundImage.src = '../assets/tiled/foreground.png';
 const battleBackgroundImg = new Image();
 battleBackgroundImg.src = '../assets/battle_background.jpg';
 const keys = { up: { pressed: false }, left: { pressed: false }, down: { pressed: false }, right: { pressed: false } };
-const attacks = { Slash: { name: 'Slash', damage: 25, type: 'Normal', color: 'black' }, Slam: { name: 'Slam', damage: 10, type: 'Normal', color: 'black' } };
+const attacks = { Slash: { name: 'Slash', damage: 25, type: 'Normal', color: 'white' }, Slam: { name: 'Slam', damage: 10, type: 'Normal', color: 'white' } };
 const battle = { initiated: false };
 const entities = { RedKnight: { position: redKnightPosition, image: { src: '../assets/player/right/right_0.png' }, frames: { max: 1, hold: 30 }, animate: false, name: 'Red Knight', attacks: [attacks.Slash] }, Mushroom: { position: mushroomPosition, image: { src: '../assets/monster/mushroom2.png' }, frames: { max: 3, hold: 30 }, animate: true, isEnemy: true, name: 'Mushroom', attacks: [attacks.Slam] } };
 const boundaries = [];
@@ -254,7 +254,7 @@ class Entity extends Sprite {
     } // end constructor
     attack({ attackType, recipient }) {
         battleMsg.style.display = 'block';
-        battleMsg.innerHTML = `${this.name} used ${attackType.name}`;
+        battleMsg.innerHTML = `<p>${this.name} used ${attackType.name}</p>`;
         let hpBarActual = '#enemy-hp-bar-actual';
         if (this.isEnemy) {
             hpBarActual = '#player-hp-bar-actual';
@@ -312,7 +312,6 @@ const player = new Sprite({ position: { x: canvas.width / 2 - 40, y: canvas.heig
 const foreground = new Sprite({ position: { x: offset.x, y: offset.y }, image: foregroundImage });
 const moveables = [background, ...boundaries, foreground, ...battleZoneAreas];
 const battleBackground = new Sprite({ position: { x: 0, y: 0 }, scale: 4, image: battleBackgroundImg });
-
 
 /*function declarations and definitions*/
 
@@ -513,7 +512,7 @@ function animate() {
                     moving = false;
                     break;
                 }
-            }
+            } // end for
             if (moving)
                 moveables.forEach(moveable => {
                     moveable.position.y += 3;
@@ -549,6 +548,11 @@ function initBattle() {
     battlePlayer.attacks.forEach(attack => {
         const button = document.createElement('button');
         button.innerHTML = attack.name;
+        button.style.backgroundColor = 'blue';
+        button.style.color = 'white';
+        button.style.border = 'solid 1px white';
+        button.style.fontWeight = 'bold';
+        button.style.cursor = 'pointer';
         battleMenu.append(button);
     }) // end forEach
     document.querySelectorAll('button').forEach((button) => {

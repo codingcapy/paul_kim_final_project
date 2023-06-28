@@ -24,6 +24,7 @@ $bg-color1: rgb(43, 43, 99);
 html {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: black;
 }
 
 * {
@@ -55,7 +56,8 @@ main {
     padding-left: 10px;
     flex: 1;
     margin: auto;
-    max-width: 1000px;
+    max-width: 1025px;
+    background-color: rgb(238, 238, 238);
 }
 
 footer {
@@ -160,13 +162,14 @@ footer {
 }
 
 #battle-ui {
-    background-color: white;
+    background: linear-gradient(to right, blue, black);;
+    color: white;
     height: 60px;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    border-top: 4px solid black;
+    border-top: 4px solid white;
     display: flex;
 }
 
@@ -174,6 +177,8 @@ footer {
     width: 66.66%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    background: linear-gradient(to right, blue, black);
+    color: white;
 }
 
 #attack-type {
@@ -181,7 +186,7 @@ footer {
     align-items: center;
     justify-content: center;
     width: 33.33%;
-    border-left: 4px solid black;
+    border-left: 4px solid white;
 }
 
 #attack-type h1 {
@@ -194,7 +199,8 @@ footer {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: white;
+    background: linear-gradient(to right, blue, black);
+    color: white;
     padding: 15px;
     display: none;
     cursor: pointer;
@@ -211,6 +217,17 @@ footer {
 #player-stats {
     @include stats-style(white, 125px, 75px, absolute, 55px, 10px, 4px solid black);
 }
+
+#sprites-credits {
+    li {
+        a {
+            text-decoration: none;
+            font-weight: bold;
+            color: rgb(32, 32, 165);
+        }
+    }
+}
+
 
 @media (min-width:700px) {
     #enemy-stats {
