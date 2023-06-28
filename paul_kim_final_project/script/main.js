@@ -255,7 +255,7 @@ class Entity extends Sprite {
     } // end constructor
     attack({ attackType, recipient }) {
         battleMsg.style.display = 'block';
-        battleMsg.innerHTML = `<p>${this.name} used ${attackType.name}</p>`;
+        battleMsg.innerHTML = `<p>${this.name} used <strong>${attackType.name}</strong></p>`;
         let hpBarActual = '#enemy-hp-bar-actual';
         if (this.isEnemy) {
             hpBarActual = '#player-hp-bar-actual';
@@ -324,6 +324,7 @@ function isColliding({ rectangle1, rectangle2 }) {
 } // end function isColliding
 
 function animate() {
+    const movementVelocity = 3;
     const animationId = window.requestAnimationFrame(animate);
     background.draw();
     // boundaries.forEach(boundary => {
@@ -369,7 +370,7 @@ function animate() {
                     ...boundary,
                     position: {
                         x: boundary.position.x,
-                        y: boundary.position.y + 3
+                        y: boundary.position.y + movementVelocity
                     }
                 }
             })) {
@@ -380,7 +381,7 @@ function animate() {
 
         if (moving)
             moveables.forEach(moveable => {
-                moveable.position.y += 3;
+                moveable.position.y += movementVelocity;
             })
 
         if (keys.left.pressed == true) {
@@ -393,7 +394,7 @@ function animate() {
             }
             if (moving)
                 moveables.forEach(moveable => {
-                    moveable.position.x += 3;
+                    moveable.position.x += movementVelocity;
                 })
         }
         else if (keys.right.pressed == true) {
@@ -406,7 +407,7 @@ function animate() {
             } // end for
             if (moving)
                 moveables.forEach(moveable => {
-                    moveable.position.x -= 3;
+                    moveable.position.x -= movementVelocity;
                 })
         }
     }
@@ -415,7 +416,7 @@ function animate() {
         player.image = player.sprites.down
         for (let i = 0; i < boundaries.length; ++i) {
             const boundary = boundaries[i];
-            if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y - 3 } } })) {
+            if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y - movementVelocity } } })) {
                 moving = false;
                 break;
             }
@@ -427,27 +428,27 @@ function animate() {
         if (keys.left.pressed == true) {
             for (let i = 0; i < boundaries.length; ++i) {
                 const boundary = boundaries[i];
-                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x + 3, y: boundary.position.y } } })) {
+                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x + movementVelocity, y: boundary.position.y } } })) {
                     moving = false;
                     break;
                 }
             } // end for
             if (moving)
                 moveables.forEach(moveable => {
-                    moveable.position.x += 3;
+                    moveable.position.x += movementVelocity;
                 })
         }
         else if (keys.right.pressed == true) {
             for (let i = 0; i < boundaries.length; ++i) {
                 const boundary = boundaries[i];
-                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x - 3, y: boundary.position.y } } })) {
+                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x - movementVelocity, y: boundary.position.y } } })) {
                     moving = false;
                     break;
                 }
             } // end for
             if (moving)
                 moveables.forEach(moveable => {
-                    moveable.position.x -= 3;
+                    moveable.position.x -= movementVelocity;
                 })
         }
     }
@@ -456,39 +457,39 @@ function animate() {
         player.image = player.sprites.left;
         for (let i = 0; i < boundaries.length; ++i) {
             const boundary = boundaries[i];
-            if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x + 3, y: boundary.position.y } } })) {
+            if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x + movementVelocity, y: boundary.position.y } } })) {
                 moving = false;
                 break;
             }
         } // end for
         if (moving)
             moveables.forEach(moveable => {
-                moveable.position.x += 3;
+                moveable.position.x += movementVelocity;
             })
         if (keys.up.pressed == true) {
             for (let i = 0; i < boundaries.length; ++i) {
                 const boundary = boundaries[i];
-                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y + 3 } } })) {
+                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y + movementVelocity } } })) {
                     moving = false;
                     break;
                 }
             } // end for
             if (moving)
                 moveables.forEach(moveable => {
-                    moveable.position.y += 3;
+                    moveable.position.y += movementVelocity;
                 })
         }
         else if (keys.down.pressed == true) {
             for (let i = 0; i < boundaries.length; ++i) {
                 const boundary = boundaries[i];
-                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y - 3 } } })) {
+                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y - movementVelocity } } })) {
                     moving = false;
                     break;
                 }
             } // end for
             if (moving)
                 moveables.forEach(moveable => {
-                    moveable.position.y -= 3;
+                    moveable.position.y -= movementVelocity;
                 })
         }
     }
@@ -509,27 +510,27 @@ function animate() {
         if (keys.up.pressed == true) {
             for (let i = 0; i < boundaries.length; ++i) {
                 const boundary = boundaries[i];
-                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y + 3 } } })) {
+                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y + movementVelocity } } })) {
                     moving = false;
                     break;
                 }
             } // end for
             if (moving)
                 moveables.forEach(moveable => {
-                    moveable.position.y += 3;
+                    moveable.position.y += movementVelocity;
                 })
         }
         else if (keys.down.pressed == true) {
             for (let i = 0; i < boundaries.length; ++i) {
                 const boundary = boundaries[i];
-                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y - 3 } } })) {
+                if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y - movementVelocity } } })) {
                     moving = false;
                     break;
                 }
             } // end for
             if (moving)
                 moveables.forEach(moveable => {
-                    moveable.position.y -= 3;
+                    moveable.position.y -= movementVelocity;
                 })
         }
     }
@@ -584,6 +585,8 @@ function initBattle() {
                 if (battlePlayer.health <= 0) {
                     queue.push(() => {
                         battlePlayer.faint();
+                        background.position.x = offset.x;
+                        background.position.y = offset.y;
                         queue.push(() => {
                             gsap.to('#container2', {
                                 opacity: 1,
