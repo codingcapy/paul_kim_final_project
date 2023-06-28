@@ -168,12 +168,13 @@ const battleZones = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-for (let i = 0; i < collisions.length; i += 50) {
-    collisionsMap.push(collisions.slice(i, 50 + i));
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+const numberOfTilesPerRow = 50;
+for (let i = 0; i < collisions.length; i += numberOfTilesPerRow) {
+    collisionsMap.push(collisions.slice(i, numberOfTilesPerRow + i));
 }
-for (let i = 0; i < battleZones.length; i += 50) {
-    battleZonesMap.push(battleZones.slice(i, 50 + i));
+for (let i = 0; i < battleZones.length; i += numberOfTilesPerRow) {
+    battleZonesMap.push(battleZones.slice(i, numberOfTilesPerRow + i));
 }
 
 /*class declarations and definitions*/
@@ -550,7 +551,7 @@ function initBattle() {
         button.innerHTML = attack.name;
         button.style.backgroundColor = 'blue';
         button.style.color = 'white';
-        button.style.border = 'solid 1px white';
+        button.style.border = 'solid 2px white';
         button.style.fontWeight = 'bold';
         button.style.cursor = 'pointer';
         battleMenu.append(button);
