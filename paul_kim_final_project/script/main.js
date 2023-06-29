@@ -294,6 +294,9 @@ class Entity extends Sprite {
                     hpBarActual = '#player-hp-bar-actual';
                     gsap.to(hpBarActual, { width: `${caster.health}%` })
                 }
+                if (battlePlayer.health > 25){
+                    playerHpBar.style.backgroundColor = 'rgb(39, 211, 39)';
+                }
                 break;
         } // end switch
     } // end function attack
@@ -354,7 +357,7 @@ function animate() {
     if (keys.up.pressed || keys.left.pressed || keys.down.pressed || keys.right.pressed) {
         for (let i = 0; i < battleZoneAreas.length; ++i) {
             const battleZone = battleZoneAreas[i];
-            if (isColliding({ rectangle1: player, rectangle2: battleZone }) && Math.random() < 0.005) {
+            if (isColliding({ rectangle1: player, rectangle2: battleZone }) && Math.random() < 0.002) {
                 battle.initiated = true;
                 gsap.to('#container2', {
                     opacity: 1,
@@ -561,13 +564,14 @@ function initBattle() {
     userInterface.style.display = 'block';
     battleMsg.style.display = 'none';
     enemyHpBar.style.width = '100%';
+    enemyHpBar.style.backgroundColor = 'rgb(39, 211, 39)'
     playerHpBar.style.width = `${battlePlayer.health}%`;
     battleMenu.replaceChildren();
     const randomAttack = battleMushroom.attacks[Math.floor(Math.random() * battleMushroom.attacks.length)];
     battlePlayer.attacks.forEach(attack => {
         const button = document.createElement('button');
         button.innerHTML = attack.name;
-        button.style.backgroundColor = 'blue';
+        button.style.backgroundColor = 'transparent';
         button.style.color = 'white';
         button.style.borderLeft = 'solid 2px white';
         button.style.borderRight = 'solid 2px white';
@@ -583,6 +587,9 @@ function initBattle() {
             const selectedAttack = attacks[e.currentTarget.innerHTML];
             const mushroomXp = 10;
             battlePlayer.attack({ attackType: selectedAttack, recipient: battleMushroom, renderedSprites, caster: battlePlayer });
+            if (battleMushroom.health < 30){
+                enemyHpBar.style.backgroundColor = 'red';
+            }
             if (battleMushroom.health <= 0) {
                 playerStats.exp += mushroomXp;
                 queue.push(() => {
@@ -646,6 +653,9 @@ function initBattle() {
             }
             queue.push(() => {
                 battleMushroom.attack({ attackType: randomAttack, recipient: battlePlayer, renderedSprites });
+                if (battlePlayer.health < 25){
+                    playerHpBar.style.backgroundColor = 'red';
+                }
                 if (battlePlayer.health <= 0) {
                     background.position.x = offset.x;
                     background.position.y = offset.y;
