@@ -1,5 +1,5 @@
 /*
-Author: Paul Kim
+Author: Paul Kim A01273049
 Date: June 28, 2023
 Version: 1.0
 COMP 2132 Final Project
@@ -63,7 +63,7 @@ const battleBackgroundImg = new Image();
 battleBackgroundImg.src = '../assets/battle_background.jpg';
 const keys = { up: { pressed: false }, left: { pressed: false }, down: { pressed: false }, right: { pressed: false } };
 const playerStats = { exp: 0, level: 1, hp: 100, atk: 25 };
-const attacks = { Slash: { name: 'Slash', damage: playerStats.atk, type: 'Normal', color: 'white' }, Slam: { name: 'Slam', damage: 10, type: 'Normal', color: 'white' }, Heal: { name: 'Heal', damage: 25, type: 'Cure', color: 'rgb(0, 255, 221)' } };
+const attacks = { Slash: { name: 'Slash', damage: playerStats.atk, type: 'Normal', color: 'white' }, Slam: { name: 'Slam', damage: 15, type: 'Normal', color: 'white' }, Heal: { name: 'Heal', damage: 25, type: 'Cure', color: 'rgb(0, 255, 221)' } };
 const battle = { initiated: false };
 const entities = { RedKnight: { position: redKnightPosition, image: { src: '../assets/player/right/right_0.png' }, frames: { max: 1, hold: 30 }, animate: false, name: 'Red Knight', attacks: [attacks.Slash, attacks.Heal], health: playerStats.hp }, Mushroom: { position: mushroomPosition, image: { src: '../assets/monster/mushroom2.png' }, frames: { max: 3, hold: 30 }, animate: true, isEnemy: true, name: 'Mushroom', attacks: [attacks.Slam] } };
 const boundaries = [];
@@ -604,16 +604,21 @@ function initBattle() {
                     playerStats.level = 4;
                     playerStats.atk = 100;
                     attacks.Slash.damage = playerStats.atk;
+                    attacks.Slam.damage = 35;
+                    attacks.Heal.damage = 40;
                 }
                 else if (playerStats.exp > 49) {
                     playerStats.level = 3;
                     playerStats.atk = 75;
                     attacks.Slash.damage = playerStats.atk;
+                    attacks.Slam.damage = 30;
+                    attacks.Heal.damage = 35;
                 }
                 else if (playerStats.exp > 19) {
                     playerStats.level = 2;
                     playerStats.atk = 50;
                     attacks.Slash.damage = playerStats.atk;
+                    attacks.Slam.damage = 20;
                 }
                 if (playerStats.exp == 20) {
                     queue.push(() => {
@@ -652,7 +657,7 @@ function initBattle() {
                 })
             }
             queue.push(() => {
-                battleMushroom.attack({ attackType: randomAttack, recipient: battlePlayer, renderedSprites });
+                battleMushroom.attack({ attackType: randomAttack, recipient: battlePlayer, renderedSprites, caster: battleMushroom });
                 if (battlePlayer.health < 25){
                     playerHpBar.style.backgroundColor = 'red';
                 }
