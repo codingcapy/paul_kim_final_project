@@ -45,8 +45,8 @@ const attackType = document.getElementById('attack-type');
 const userInterface = document.getElementById('user-interface');
 const enemyHpBar = document.getElementById('enemy-hp-bar-actual');
 const playerHpBar = document.getElementById('player-hp-bar-actual');
-enemyName.innerHTML += 'Mushroom'
-playerName.innerHTML += 'Player'
+enemyName.innerHTML += 'Mushroom';
+playerName.innerHTML += 'Player';
 const backgroundImage = new Image();
 backgroundImage.src = '../assets/tiled/background.png';
 const playerUpImage = new Image();
@@ -119,7 +119,7 @@ const collisions = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 const battleZones = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -309,7 +309,7 @@ battleZonesMap.forEach((row, i) => {
     }) // end forEach
 }) // end forEach
 
-const background = new Sprite({ position: { x: offset.x, y: offset.y }, image: backgroundImage })
+const background = new Sprite({ position: { x: offset.x, y: offset.y }, image: backgroundImage });
 const player = new Sprite({ position: { x: canvas.width / 2 - 40, y: canvas.height / 2 - 40 }, image: playerDownImage, frames: { max: 4, hold: 20 }, sprites: { up: playerUpImage, left: playerLeftImage, right: playerRightImage, down: playerDownImage } });
 const foreground = new Sprite({ position: { x: offset.x, y: offset.y }, image: foregroundImage });
 const moveables = [background, ...boundaries, foreground, ...battleZoneAreas];
@@ -414,7 +414,7 @@ function animate() {
     }
     else if (keys.down.pressed == true) {
         player.animate = true;
-        player.image = player.sprites.down
+        player.image = player.sprites.down;
         for (let i = 0; i < boundaries.length; ++i) {
             const boundary = boundaries[i];
             if (isColliding({ rectangle1: player, rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y - movementVelocity } } })) {
@@ -424,7 +424,7 @@ function animate() {
         } // end for
         if (moving)
             moveables.forEach(moveable => {
-                moveable.position.y -= 3
+                moveable.position.y -= movementVelocity;
             })
         if (keys.left.pressed == true) {
             for (let i = 0; i < boundaries.length; ++i) {
@@ -563,8 +563,8 @@ function initBattle() {
     }) // end forEach
     document.querySelectorAll('button').forEach((button) => {
         button.addEventListener('click', (e) => {
-            console.log(`hp: ${battlePlayer.health}`)
-            console.log(`damage:${attacks.Slash.damage}`)
+            console.log(`hp: ${battlePlayer.health}`);
+            console.log(`damage:${attacks.Slash.damage}`);
             const selectedAttack = attacks[e.currentTarget.innerHTML];
             const mushroomXp = 10;
             battlePlayer.attack({ attackType: selectedAttack, recipient: battleMushroom, renderedSprites });
@@ -575,7 +575,7 @@ function initBattle() {
                 })
                 queue.push(() => {
                     battleMsg.innerHTML = `<p>Red Knight gains ${mushroomXp} xp</p>`;
-                    console.log(`xp:${playerStats.exp}`)
+                    console.log(`xp:${playerStats.exp}`);
                     entities.RedKnight.health = battlePlayer.health;
                 })
                 if (playerStats.exp > 49) {
@@ -592,14 +592,14 @@ function initBattle() {
                     queue.push(() => {
                         battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`;
                         console.log(`lvl: ${playerStats.level}`);
-                        console.log(`atk:${playerStats.atk}`)
+                        console.log(`atk:${playerStats.atk}`);
                     })
                 }
                 if (playerStats.exp == 50) {
                     queue.push(() => {
                         battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`;
                         console.log(`lvl: ${playerStats.level}`);
-                        console.log(`atk:${playerStats.atk}`)
+                        console.log(`atk:${playerStats.atk}`);
                     })
                 }
                 queue.push(() => {
@@ -620,14 +620,16 @@ function initBattle() {
             queue.push(() => {
                 battleMushroom.attack({ attackType: randomAttack, recipient: battlePlayer, renderedSprites });
                 if (battlePlayer.health <= 0) {
+                    background.position.x = offset.x;
+                    background.position.y = offset.y;
+                    foreground.position.x = offset.x;
+                    foreground.position.y = offset.y;
+                    entities.RedKnight.health = 100;
+                    playerStats.exp = 0;
+                    entities.RedKnight.atk = 25;
+                    attacks.Slash.damage = 25;
                     queue.push(() => {
                         battlePlayer.faint();
-                            background.position.x = offset.x;
-                            background.position.y = offset.y;
-                            foreground.position.x = offset.x;
-                            foreground.position.y = offset.y;
-                            entities.RedKnight.health = 100;
-                            attacks.Slash.damage = 25;
                         queue.push(() => {
                             gsap.to('#container2', {
                                 opacity: 1,
@@ -644,7 +646,7 @@ function initBattle() {
                         })
                     })
                     queue.push(() => {
-                        battleMsg.innerHTML = "<p><strong>Game Over</strong></p>"
+                        battleMsg.innerHTML = "<p><strong>Game Over</strong></p>";
                     })
                     return;
                 }
