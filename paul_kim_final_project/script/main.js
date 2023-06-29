@@ -63,9 +63,9 @@ const battleBackgroundImg = new Image();
 battleBackgroundImg.src = '../assets/battle_background.jpg';
 const keys = { up: { pressed: false }, left: { pressed: false }, down: { pressed: false }, right: { pressed: false } };
 const playerStats = { exp: 0, level: 1, hp: 100, atk: 25 };
-const attacks = { Slash: { name: 'Slash', damage: playerStats.atk, type: 'Normal', color: 'white' }, Slam: { name: 'Slam', damage: 10, type: 'Normal', color: 'white' } };
+const attacks = { Slash: { name: 'Slash', damage: playerStats.atk, type: 'Normal', color: 'white' }, Slam: { name: 'Slam', damage: 10, type: 'Normal', color: 'white' }, Heal: { name: 'Heal', damage: 25, type: 'Cure', color: 'rgb(0, 255, 221)' } };
 const battle = { initiated: false };
-const entities = { RedKnight: { position: redKnightPosition, image: { src: '../assets/player/right/right_0.png' }, frames: { max: 1, hold: 30 }, animate: false, name: 'Red Knight', attacks: [attacks.Slash], health: playerStats.hp }, Mushroom: { position: mushroomPosition, image: { src: '../assets/monster/mushroom2.png' }, frames: { max: 3, hold: 30 }, animate: true, isEnemy: true, name: 'Mushroom', attacks: [attacks.Slam] } };
+const entities = { RedKnight: { position: redKnightPosition, image: { src: '../assets/player/right/right_0.png' }, frames: { max: 1, hold: 30 }, animate: false, name: 'Red Knight', attacks: [attacks.Slash, attacks.Heal], health: playerStats.hp }, Mushroom: { position: mushroomPosition, image: { src: '../assets/monster/mushroom2.png' }, frames: { max: 3, hold: 30 }, animate: true, isEnemy: true, name: 'Mushroom', attacks: [attacks.Slam] } };
 const boundaries = [];
 const collisionsMap = [];
 const battleZoneAreas = [];
@@ -254,7 +254,7 @@ class Entity extends Sprite {
         this.health = health;
         this.attacks = attacks;
     } // end constructor
-    attack({ attackType, recipient }) {
+    attack({ attackType, recipient, caster }) {
         battleMsg.style.display = 'block';
         battleMsg.innerHTML = `<p>${this.name} used <strong>${attackType.name}</strong></p>`;
         let hpBarActual = '#enemy-hp-bar-actual';
@@ -265,7 +265,6 @@ class Entity extends Sprite {
         if (this.isEnemy) {
             rotation = -2;
         }
-        recipient.health -= attackType.damage;
         switch (attackType.name) {
             case 'Slam':
                 const tl = gsap.timeline();
@@ -274,6 +273,7 @@ class Entity extends Sprite {
                     movementDistance = -20;
                 }
                 tl.to(this.position, { x: this.position.x - movementDistance }).to(this.position, { x: this.position.x + movementDistance * 2, duration: 0.1, onComplete: () => { gsap.to(hpBarActual, { width: `${recipient.health}%` }), gsap.to(recipient.position, { x: recipient.position.x + 10, yoyo: true, repeat: 5, duration: 0.1 }), gsap.to(recipient, { opacity: 0, yoyo: true, repeat: 5, duration: 0.1 }) } }).to(this.position, { x: this.position.x });
+                recipient.health -= attackType.damage;
                 break;
             case 'Slash':
                 const slashImg = new Image();
@@ -281,6 +281,19 @@ class Entity extends Sprite {
                 const slash = new Sprite({ position: { x: this.position.x, y: this.position.y }, image: slashImg, frames: { max: 1, hold: 10 }, animate: true });
                 renderedSprites.splice(1, 0, slash);
                 gsap.to(slash.position, { x: recipient.position.x, y: recipient.position.y, onComplete: () => { gsap.to(hpBarActual, { width: `${recipient.health}%` }), gsap.to(recipient.position, { x: recipient.position.x + 10, yoyo: true, repeat: 5, duration: 0.08 }), gsap.to(recipient, { opacity: 0, repeat: 5, yoyo: true, duration: 0.1 }), renderedSprites.splice(1, 1) } });
+                recipient.health -= attackType.damage;
+                break;
+            case 'Heal':
+                if(battlePlayer.health > 75 && battlePlayer.health < 100){
+                    battlePlayer.health = 100;
+                    hpBarActual = '#player-hp-bar-actual';
+                    gsap.to(hpBarActual, { width: `${caster.health}%` })
+                }
+                else if (battlePlayer.health <= 75) {
+                    caster.health += attackType.damage;
+                    hpBarActual = '#player-hp-bar-actual';
+                    gsap.to(hpBarActual, { width: `${caster.health}%` })
+                }
                 break;
         } // end switch
     } // end function attack
@@ -556,7 +569,9 @@ function initBattle() {
         button.innerHTML = attack.name;
         button.style.backgroundColor = 'blue';
         button.style.color = 'white';
-        button.style.border = 'solid 2px white';
+        button.style.borderLeft = 'solid 2px white';
+        button.style.borderRight = 'solid 2px white';
+        button.style.borderBottom = 'solid 2px white';
         button.style.fontWeight = 'bold';
         button.style.cursor = 'pointer';
         battleMenu.append(button);
@@ -567,7 +582,7 @@ function initBattle() {
             console.log(`damage:${attacks.Slash.damage}`);
             const selectedAttack = attacks[e.currentTarget.innerHTML];
             const mushroomXp = 10;
-            battlePlayer.attack({ attackType: selectedAttack, recipient: battleMushroom, renderedSprites });
+            battlePlayer.attack({ attackType: selectedAttack, recipient: battleMushroom, renderedSprites, caster: battlePlayer });
             if (battleMushroom.health <= 0) {
                 playerStats.exp += mushroomXp;
                 queue.push(() => {
@@ -578,7 +593,12 @@ function initBattle() {
                     console.log(`xp:${playerStats.exp}`);
                     entities.RedKnight.health = battlePlayer.health;
                 })
-                if (playerStats.exp > 49) {
+                if (playerStats.exp > 99) {
+                    playerStats.level = 4;
+                    playerStats.atk = 100;
+                    attacks.Slash.damage = playerStats.atk;
+                }
+                else if (playerStats.exp > 49) {
                     playerStats.level = 3;
                     playerStats.atk = 75;
                     attacks.Slash.damage = playerStats.atk;
@@ -596,6 +616,13 @@ function initBattle() {
                     })
                 }
                 if (playerStats.exp == 50) {
+                    queue.push(() => {
+                        battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`;
+                        console.log(`lvl: ${playerStats.level}`);
+                        console.log(`atk:${playerStats.atk}`);
+                    })
+                }
+                if (playerStats.exp == 100) {
                     queue.push(() => {
                         battleMsg.innerHTML = `<p>Red Knight leveled up! Level: ${playerStats.level}</p>`;
                         console.log(`lvl: ${playerStats.level}`);
@@ -656,6 +683,7 @@ function initBattle() {
             const selectedAttack = attacks[e.currentTarget.innerHTML];
             attackType.innerHTML = `<strong>${selectedAttack.type}</strong>`;
             attackType.style.color = selectedAttack.color;
+            attackType.style.fontSize = '18px'
         }) // end event listener
     }) // end forEach
 } // end function initBattle
