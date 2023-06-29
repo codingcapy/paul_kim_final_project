@@ -668,8 +668,10 @@ function initBattle() {
                     foreground.position.y = offset.y;
                     entities.RedKnight.health = 100;
                     playerStats.exp = 0;
+                    playerHpBar.style.backgroundColor = 'rgb(39, 211, 39)'
                     entities.RedKnight.atk = 25;
                     attacks.Slash.damage = 25;
+                    attacks.Slam.damage = 15;
                     queue.push(() => {
                         battlePlayer.faint();
                         queue.push(() => {
