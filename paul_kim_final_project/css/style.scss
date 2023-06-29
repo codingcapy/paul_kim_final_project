@@ -11,9 +11,11 @@ COMP 2132 Final Project
 
 $bg-color1: rgb(43, 43, 99);
 $hp-actual-color: rgb(39, 211, 39);
+$battle-background: to right, blue, black;
 
-@mixin stats-style($background-color, $width, $height, $position, $top, $left, $border) {
+@mixin stats-style($background-color, $color, $width, $height, $position, $top, $left, $border) {
     background-color: $background-color;
+    color: $color;
     width: $width;
     height: $height;
     position: $position;
@@ -249,11 +251,11 @@ footer {
 }
 
 #enemy-stats {
-    @include stats-style(white, 125px, 75px, absolute, 55px, 170px, 4px solid black);
+    @include stats-style(rgb(30, 30, 122, 0.75), white, 125px, 75px, absolute, 55px, 170px, 4px solid white);
 }
 
 #player-stats {
-    @include stats-style(white, 125px, 75px, absolute, 55px, 10px, 4px solid black);
+    @include stats-style(rgb(30, 30, 122, 0.75), white, 125px, 75px, absolute, 55px, 10px, 4px solid white);
 }
 
 #sprites-credits {

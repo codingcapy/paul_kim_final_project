@@ -225,23 +225,25 @@ footer {
 }
 
 #enemy-stats {
-  background-color: white;
+  background-color: rgba(30, 30, 122, 0.75);
+  color: white;
   width: 125px;
   height: 75px;
   position: absolute;
   top: 55px;
   left: 170px;
-  border: 4px solid black;
+  border: 4px solid white;
 }
 
 #player-stats {
-  background-color: white;
+  background-color: rgba(30, 30, 122, 0.75);
+  color: white;
   width: 125px;
   height: 75px;
   position: absolute;
   top: 55px;
   left: 10px;
-  border: 4px solid black;
+  border: 4px solid white;
 }
 
 #sprites-credits li a {
